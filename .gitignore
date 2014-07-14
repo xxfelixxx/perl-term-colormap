@@ -16,3 +16,5 @@ pod2htm*.tmp
 pm_to_blib
 Term-Colormap-*
 Term-Colormap-*.tar.gz
+*~
+*#
