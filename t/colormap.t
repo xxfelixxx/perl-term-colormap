@@ -27,3 +27,9 @@ for my $name ( @valid_colormaps ) {
 
 dies_ok { colormap('foo') } 'Colormap catches invalid names';
 
+for my $color ( 0 .. 255 ) {
+    my $rgb = color2rgb($color);
+    ok( 6 == length($rgb), 'color2rgb( ' . $color . ' ) = ' . $rgb);
+}
+
+done_testing();
