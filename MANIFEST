@@ -1,3 +1,4 @@
+.gitignore
 Build.PL
 Changes
 lib/Term/Colormap.pm
