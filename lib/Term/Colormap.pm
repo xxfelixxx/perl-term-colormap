@@ -4,6 +4,7 @@ use 5.006;
 use strict;
 use warnings FATAL => 'all';
 use Exporter 'import';
+use Scalar::Util qw( looks_like_number );
 
 our $VERSION = '0.02';
 
@@ -118,6 +119,10 @@ sub colormap {
 
 sub color2rgb {
     my ($color) = @_;
+
+    if ($color < 0 or $color >= scalar @$color2rgb) {
+        die "Invalid color value : $color";
+    }
 
     return $color2rgb->[$color];
 }

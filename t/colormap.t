@@ -32,4 +32,8 @@ for my $color ( 0 .. 255 ) {
     ok( 6 == length($rgb), 'color2rgb( ' . $color . ' ) = ' . $rgb);
 }
 
+for my $color qw( -2 -1 256 257 foo ) {
+    dies_ok { color2rgb($color) } 'color2rgb catches invalid colors';
+}
+
 done_testing();
