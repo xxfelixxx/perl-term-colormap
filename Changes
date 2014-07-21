@@ -1,5 +1,8 @@
 Revision history for Term-Colormap
 
+0.04    Mon Jul 21 03:46:17 UTC 2014
+    * Fixed Build.PL per Kwalitee feedback.
+
 0.03    Fri Jul 18 04:49:48 UTC 2014
     * Added sanity checking to color2rgb.
 
