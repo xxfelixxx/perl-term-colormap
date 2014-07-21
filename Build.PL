@@ -16,10 +16,17 @@ my $builder = Module::Build->new(
         'Test::More' => 0,
     },
     requires => {
+        'perl'          => '5.006',
+        'Scalar::Util'  => 0,
         'Term::ReadKey' => 0,
     },
     add_to_cleanup     => [ 'Term-Colormap-*' ],
     create_makefile_pl => 'traditional',
+    meta_merge => {
+        resources => {
+            repository => 'https://github.com/xxfelixxx/perl-term-colormap',
+        },
+    },
 );
 
 $builder->create_build_script();
