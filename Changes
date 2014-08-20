@@ -1,5 +1,8 @@
 Revision history for Term-Colormap
 
+0.06    Mon Aug 20 05:41:55 UTC 2014
+    * Fixed git_blame_summary when git-annotate has extra dates in code.
+
 0.05    Mon Aug 20 03:08:32 UTC 2014
     * Added scripts hbar and git_blame_summary.
     * Added screenshots of hbar and git_blame_summary in action.

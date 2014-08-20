@@ -6,7 +6,7 @@ use warnings FATAL => 'all';
 use Exporter 'import';
 use Scalar::Util qw( looks_like_number );
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 our @EXPORT_OK = qw(
     colorbar
