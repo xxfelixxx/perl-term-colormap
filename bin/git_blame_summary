@@ -11,7 +11,7 @@ use File::Basename;
 
 binmode STDOUT, 'encoding(utf8)';
 
--f $ARGV[0]
+$ARGV[0] and -f $ARGV[0]
     or usage();
 
 my $file_to_blame = $ARGV[0];
