@@ -31,12 +31,15 @@ my ( $authors, $dates, $commits ) = ( {}, {}, {} );
 # Scrape git-blame
 while (<$fh>) {
 
-    s|[\(\)]||g; # Get rid of parens
-    s|[\/\\\"\']||g; # Get rid of special characters # / \ "''"
-    #                commit         Author Name    YYYY-MM-DD
-    my ($author) = /^[\^a-f0-9]+\s+(\S+.+?\S+?)\s+\d{4}-/;
+    # Cleanup
+    s|^(.+?\d{4}-\d{2}-\d{2})(.*)$|$1|; # Remove everything after the first date
+    s|[\(\)]||g;                        # Get rid of parens
+    s|[\/\\\"\']||g;                    # Get rid of special characters # / \ "''"
+
+    #                                |--commit---|   |--author--|   |------date-------|
+    my ($commit, $author, $date) = /^([\^a-f0-9]+)\s+(\S+.+?\S+?)\s+(\d{4}-\d{2}-\d{2})/;
     $authors->{$author}++;
-    my ($date) = /(\d{4}-\d{2}-\d{2})/;
+
     $date = date2num($date);
     
     # Most recent commit by author
@@ -49,7 +52,6 @@ while (<$fh>) {
     }
 
     # Commits per author
-    my ($commit) = /^([\^a-f0-9]+)/;
     $commits->{$author}->{$commit}++;
 }
 my $lines = $.;
