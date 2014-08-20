@@ -21,7 +21,7 @@ my $file = basename($file_to_blame);
 my $cwd  = $ENV{PWD};
 
 chdir($dir);
-open my $fh, "git blame $file |"
+open my $fh, "git annotate --encoding=utf8 $file |"
     or die "failed to run git blame : $!";
 binmode($fh, 'utf8:');
 chdir($cwd);
