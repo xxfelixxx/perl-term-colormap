@@ -34,7 +34,7 @@ my $commits = {};
 while (<$fh>) {
 
     s|[\(\)]||g; # Get rid of parens
-    s|[\/\\\"\']||g; # Get rid of special characters
+    s|[\/\\\"\']||g; # Get rid of special characters # /\"'
     #                commit         Author Name    YYYY-MM-DD
     my ($author) = /^[\^a-f0-9]+\s+(\S+.+?\S+?)\s+\d{4}-/;
     $authors->{$author}++;
