@@ -26,9 +26,7 @@ open my $fh, "git annotate --encoding=utf8 $file |"
 binmode($fh, 'utf8:');
 chdir($cwd);
 
-my $authors = {};
-my $dates = {};
-my $commits = {};
+my ( $authors, $dates, $commits ) = ( {}, {}, {} );
 
 # Scrape git-blame
 while (<$fh>) {
@@ -41,12 +39,16 @@ while (<$fh>) {
     my ($date) = /(\d{4}-\d{2}-\d{2})/;
     $date = date2num($date);
     
+    # Most recent commit by author
     if ($dates->{$author}) {
+        # Many commits
         $dates->{$author} = ( $date > $dates->{$author} ? $date : $dates->{$author} );
     } else {
+        # First commit seen
         $dates->{$author} = $date;
     }
 
+    # Commits per author
     my ($commit) = /^([\^a-f0-9]+)/;
     $commits->{$author}->{$commit}++;
 }
@@ -62,7 +64,7 @@ reverse sort { $dates->{$a} cmp $dates->{$b} } keys %$authors;
 my $max_date_n = $n-1;
 
 my @authors_by_date = sort { $date_order->{$a} <=> $date_order->{$b}} keys %$authors;
-my ($last_author) = @authors_by_date;
+my ($last_author)  = @authors_by_date;
 my ($first_author) = reverse @authors_by_date;
 
 my $first_date = $dates->{$first_author};
