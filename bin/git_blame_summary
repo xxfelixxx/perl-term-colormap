@@ -83,6 +83,7 @@ print BOLD MAGENTA " on ";
 print RED num2date($dates->{$last_author}) . "\n\n";
 
 my $rainbow = colormap('rainbow');
+my $palette = [ reverse @$rainbow ];
 
 # Authors with the most lines of code first
 for (sort { $authors->{$b} <=> $authors->{$a} } keys %$authors) {
@@ -113,45 +114,50 @@ print "\n";
 
 exit 0;
 
+sub fit_value_to_range {
+    my ($value, $min, $max) = @_;
+    return $value < $min ? $min
+         : $value > $max ? $max
+         : $value;
+}
+
+sub get_param_for_range {
+    my ($value, $min, $max) = @_;
+    my $capped_value = fit_value_to_range($value, $min, $max);
+    return ( $capped_value - $min ) / ( $max - $min );
+}
+
+sub get_log10_param_for_range {
+    my ($value, $min, $max) = @_;
+    my $capped_value = fit_value_to_range($value, $min, $max);
+    return ( log10($capped_value) - log10($min) ) / ( log10($max) - log10($min) );
+}
+
+sub get_color_for_param {
+    my ($param) = @_;
+    return $palette->[ int( $param * ( scalar @$palette - 1 ) ) ];
+}
+
 sub output_by_percent {
     my ($percent, $result) = @_;
 
-    my $palette = [ reverse @$rainbow ];
-    my ($percent_min, $percent_max) = (0.01, 100);
-    $percent = $percent < $percent_min ? $percent_min : $percent;
-    $percent = $percent > $percent_max ? $percent_max : $percent;
+    my $param = get_log10_param_for_range($percent, 0.1, 100);
 
-    my $param = 
-      ( log10($percent)     - log10($percent_min) ) /
-      ( log10($percent_max) - log10($percent_min) );
-
-    $param = $param*$param;
-
-    my ($color) = $palette->[ int( $param * ( scalar @$palette - 1 ) ) ];
-
-    print_colored_text($color, $result);
-
-    return $color;
+    print_colored_text( get_color_for_param( $param ), $result);
 }
 
 sub output_by_date_order {
     my ($yyyymmdd, $result) = @_;
 
-    my $palette = [ reverse @$rainbow ];
+    my $param = get_param_for_range($yyyymmdd, $first_date, $last_date);
 
-    my $param = 
-        ( $yyyymmdd - $first_date) / ( $last_date - $first_date);
+    my $color = get_color_for_param( $param );
 
-    $param = $param*$param;
-
-    my ($color) = $palette->[ int( $param * ( scalar @$palette - 1))];
-
-    if ($color == 1) { # Red
+    if ($color == 1) { # Highlight the Most Recent Commit Date in Red
         print_colored($color, $result);
     } else {
         print_colored_text($color, $result);
     }
-    
 }
 
 sub log10 {
