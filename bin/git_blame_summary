@@ -125,6 +125,7 @@ sub fit_value_to_range {
 
 sub get_param_for_range {
     my ($value, $min, $max) = @_;
+    return 1 if ($min == $max);
     my $capped_value = fit_value_to_range($value, $min, $max);
     return ( $capped_value - $min ) / ( $max - $min );
 }
