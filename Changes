@@ -1,5 +1,9 @@
 Revision history for Term-Colormap
 
+0.05    Mon Aug 20 03:08:32 UTC 2014
+    * Added scripts hbar and git_blame_summary.
+    * Added screenshots of hbar and git_blame_summary in action.
+
 0.04    Mon Jul 21 03:46:17 UTC 2014
     * Fixed Build.PL per Kwalitee feedback.
 
