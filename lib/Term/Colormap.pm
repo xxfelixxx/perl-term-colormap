@@ -190,7 +190,7 @@ Term::Colormap - Colormaps for ANSI 256 Color Terminals!
 
 =head1 VERSION
 
-Version 0.04
+Version 0.06
 
 =head1 SYNOPSIS
 
