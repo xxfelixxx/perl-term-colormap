@@ -21,26 +21,37 @@ my $file = basename($file_to_blame);
 my $cwd  = $ENV{PWD};
 
 chdir($dir);
-open my $fh, "git annotate --encoding=utf8 $file |"
+open my $fh, "git annotate --encoding=utf8 --incremental $file |"
     or die "failed to run git blame : $!";
 binmode($fh, 'utf8:');
 chdir($cwd);
 
 my ( $authors, $dates, $commits ) = ( {}, {}, {} );
+my ( $commit_authors, $commit_dates ) = ( {}, {} );
+my $lines = 0;
 
-# Scrape git-blame
-while (<$fh>) {
+my $blame_data = do { local $/; <$fh> };
 
-    # Cleanup
-    s|^(.+?\d{4}-\d{2}-\d{2})(.*)$|$1|; # Remove everything after the first date
-    s|[\(\)]||g;                        # Get rid of parens
-    s|[\/\\\"\']||g;                    # Get rid of special characters # / \ "''"
+# Split into chunks starting with SHA-1 and ending with the filename
+foreach my $block ( split /\nfilename /s, $blame_data ) {
 
-    #                                |--commit---|   |--author--|   |------date-------|
-    my ($commit, $author, $date) = /^([\^a-f0-9]+)\s+(\S+.+?\S+?)\s+(\d{4}-\d{2}-\d{2})/;
-    $authors->{$author}++;
+    my ($commit, $lines_in_block) = $block =~ m|\n?([\^a-f0-9]+) \d+ \d+ (\d+)|;
+    next unless $commit;
+    $lines += $lines_in_block;
 
-    $date = date2num($date);
+    if (my ($author) = $block =~ m|\nauthor (.*?)\n|) {
+        $author =~ s|[\(\)]||g;
+        $commit_authors->{$commit} = $author;
+    }
+
+    if (my ($epoch) = $block =~ m|\nauthor-time (\d+)|) {
+        $commit_dates->{$commit} = date_for_epoch($epoch);
+    }
+
+    my $author = $commit_authors->{$commit};
+    $authors->{$author} += $lines_in_block;
+
+    my $date = date2num($commit_dates->{$commit});
     
     # Most recent commit by author
     if ($dates->{$author}) {
@@ -54,7 +65,6 @@ while (<$fh>) {
     # Commits per author
     $commits->{$author}->{$commit}++;
 }
-my $lines = $.;
 close $fh;
 
 # Order the authors by date of most recent commit
@@ -180,6 +190,15 @@ sub num2date {
     my ($num) = @_;
     $num =~ s/(\d{4})(\d{2})(\d{2})/$1-$2-$3/;
     return($num);
+}
+
+sub date_for_epoch {
+    my ($epoch) = @_;
+    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) =
+        localtime($epoch);
+    $year += 1900;
+    $mon  += 1;
+    sprintf( "%4d-%02d-%02d", $year, $mon, $mday );
 }
 
 sub usage {
