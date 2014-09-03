@@ -54,7 +54,7 @@ sub main {
         } 
 
         # Ignore if we don't understand
-        if ( $label and looks_like_number($value) ) {
+        if ( defined $label and looks_like_number($value) ) {
             push @data, { label => $label, value => $value };
         }
     }
