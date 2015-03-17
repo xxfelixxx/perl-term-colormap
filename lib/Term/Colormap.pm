@@ -12,6 +12,7 @@ our @EXPORT_OK = qw(
     colorbar
     colormap
     color2rgb
+    rgb2color
     print_colored
     print_colored_text
     color_table
@@ -104,6 +105,43 @@ my $color2rgb = [
     '949494', '9e9e9e', 'a8a8a8', 'b2b2b2', 'bcbcbc', 'c6c6c6',
     'd0d0d0', 'dadada', 'e4e4e4', 'eeeeee',
 ];
+
+my $color = 0;
+my $rgb2color = { map { $_ => $color++ } @$color2rgb };
+
+sub rgb2color {
+    my ($rgb) = @_;
+
+    unless (defined $rgb2color->{$rgb}) {
+        $rgb2color->{ $rgb } = $rgb2color->{ get_nearest_color($rgb) };
+    }
+
+    return $rgb2color->{$rgb};
+}
+
+sub get_nearest_color {
+    my ($rgb) = @_;
+    my $closest = 3 * (scalar @$color2rgb);
+    my $best_color;
+    for my $color ( @$color2rgb ) {
+        my $dist = color_distance($rgb, $color);
+        if ($dist < $closest) {
+            $best_color = $color;
+            $closest = $dist;
+        }
+    }
+    return $best_color;
+}
+
+sub color_distance {
+    my ($rgb0, $rgb1) = @_;
+    my $rgb = $rgb0 . $rgb1;
+    my ($r0, $g0, $b0,
+        $r1, $g1, $b1) = map { hex } ( $rgb =~ m/../g );
+    return abs($r1 - $r0)
+         + abs($g1 - $g0)
+         + abs($b1 - $b0);
+}
 
 sub colormap {
     my ($name) = @_;
@@ -242,6 +280,12 @@ Provide colormaps and functions to simplify rendering colored text using ANSI 25
     Returns rgb value for a color value.
 
     my $rgb = color2rgb( 255 ); #eeeeee  Very Light Gray
+
+=head2 rgb2color
+
+    Returns color value for an rgb color
+
+    my $color = rgb2color( 'eeeeee' ); 255  Very Light Gray
 
 =head2 print_colored
 

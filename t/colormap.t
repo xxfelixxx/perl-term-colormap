@@ -11,6 +11,7 @@ BEGIN {
           colorbar
           colormap
           color2rgb
+          rgb2color
           print_colored
           print_colored_text
           color_table
@@ -27,12 +28,20 @@ for my $name ( @valid_colormaps ) {
 
 dies_ok { colormap('foo') } 'Colormap catches invalid names';
 
+my $colors_seen = {};
 for my $color ( 0 .. 255 ) {
     my $rgb = color2rgb($color);
     ok( 6 == length($rgb), 'color2rgb( ' . $color . ' ) = ' . $rgb);
+    push @{ $colors_seen->{ $rgb } }, $color;
 }
 
-for my $color qw( -2 -1 256 257 foo ) {
+for my $rgb ( keys %$colors_seen ) {
+    my $color_new = rgb2color( $rgb );
+    ok( ( grep { $color_new == $_ } @{ $colors_seen->{$rgb} } ),
+        'rgb2color( ' . $rgb . ' ) = ' . $color_new);
+}
+
+for my $color ( qw( -2 -1 256 257 foo ) ) {
     dies_ok { color2rgb($color) } 'color2rgb catches invalid colors';
 }
 
