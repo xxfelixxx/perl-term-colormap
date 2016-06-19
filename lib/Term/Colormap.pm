@@ -113,18 +113,18 @@ sub rgb2color {
     my ($rgb) = @_;
 
     unless (defined $rgb2color->{$rgb}) {
-        $rgb2color->{ $rgb } = $rgb2color->{ get_nearest_color($rgb) };
+        $rgb2color->{ $rgb } = $rgb2color->{ _get_nearest_color($rgb) };
     }
 
     return $rgb2color->{$rgb};
 }
 
-sub get_nearest_color {
+sub _get_nearest_color {
     my ($rgb) = @_;
     my $closest = 3 * (scalar @$color2rgb);
     my $best_color;
     for my $color ( @$color2rgb ) {
-        my $dist = color_distance($rgb, $color);
+        my $dist = _color_distance($rgb, $color);
         if ($dist < $closest) {
             $best_color = $color;
             $closest = $dist;
@@ -133,7 +133,7 @@ sub get_nearest_color {
     return $best_color;
 }
 
-sub color_distance {
+sub _color_distance {
     my ($rgb0, $rgb1) = @_;
     my $rgb = $rgb0 . $rgb1;
     my ($r0, $g0, $b0,
