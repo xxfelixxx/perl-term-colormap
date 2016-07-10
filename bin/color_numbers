@@ -1,0 +1,57 @@
+#!/usr/bin/env perl
+use warnings;
+use strict;
+
+use Term::Colormap qw( print_colored print_colored_text);
+use Term::ReadKey; # GetTerminalSize
+
+# Print out all colors with their numbers
+my @colors = @ARGV;
+if ( scalar @colors ) {
+    if ( grep { $_ < 0 or 255 < $_ } @colors ) {
+        usage();
+    }
+}
+
+main();
+
+sub main {
+    my ($screen_cols, $screen_rows, undef, undef) = GetTerminalSize();
+    my $n = int( $screen_cols / 6 );
+    for my $method ( \&print_colored, \&print_colored_text ) {
+        for my $color ( 0 .. 255 ) {
+            my $txt = sprintf("% 4d ",$color);
+            $method->( $color, $txt );
+            print ' ';
+            if ($color % $n == $n-1) {
+                print "\n";
+            }
+        }
+        print "\n";
+    }
+
+    if (@colors) {
+        for my $method ( \&print_colored, \&print_colored_text ) {
+            for my $color ( @colors ) {
+                my $txt = sprintf("% 4d ",$color);
+                $method->( $color, $txt );
+                print ' ';
+                if ($color % $n == $n-1) {
+                    print "\n";
+                }
+            }
+            print "\n";
+        }
+
+
+    }
+
+}
+
+sub usage {
+    print "Print out all colors with their numbers.\n";
+    print "Pass in an optional list of colors to see how they fit together.\n";
+    print "\n";
+    print "$0 [ 2 3 9 7 ]\n";
+    exit 0;
+}
