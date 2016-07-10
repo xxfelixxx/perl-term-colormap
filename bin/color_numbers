@@ -30,11 +30,12 @@ sub main {
 
     if (@colors) {
         for my $method ( \&print_colored, \&print_colored_text ) {
+            my $count = 0;
             for my $color ( @colors ) {
                 my $txt = sprintf("% 4d ",$color);
                 $method->( $color, $txt );
                 print ' ';
-                if ($color % $n == $n-1) {
+                if ($count++ % $n == $n-1) {
                     print "\n";
                 }
             }
