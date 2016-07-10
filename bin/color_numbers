@@ -3,15 +3,13 @@ use warnings;
 use strict;
 
 use Term::Colormap qw( print_colored print_colored_text);
+use Scalar::Util qw(looks_like_number);
 use Term::ReadKey; # GetTerminalSize
 
 # Print out all colors with their numbers
 my @colors = @ARGV;
-if ( scalar @colors ) {
-    if ( grep { $_ < 0 or 255 < $_ } @colors ) {
-        usage();
-    }
-}
+usage()
+    if ( grep { not looks_like_number($_) or $_ < 0 or 255 < $_ } @colors );
 
 main();
 
