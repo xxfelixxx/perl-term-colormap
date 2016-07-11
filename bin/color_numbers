@@ -25,6 +25,7 @@ sub main {
 
     if (@colors) {
         print_colors_by_code( @colors );
+        print_color_ramp( @colors );
     }
 }
 
@@ -91,6 +92,17 @@ sub print_colors_by_code {
         }
         print "\n";
     }
+}
+
+sub print_color_ramp {
+    my (@colors) = @_;
+    my $n = int( $screen_cols / 6 );
+
+    print "\n";;
+    for my $color ( @colors ) {
+        print_colored($color, '  ');
+    }
+    print "\n";
 }
 
 sub usage {
