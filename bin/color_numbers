@@ -11,13 +11,77 @@ my @colors = @ARGV;
 usage()
     if ( grep { not looks_like_number($_) or $_ < 0 or 255 < $_ } @colors );
 
+my ($screen_cols, $screen_rows, undef, undef) = GetTerminalSize();
+
 main();
 
 sub main {
-    my ($screen_cols, $screen_rows, undef, undef) = GetTerminalSize();
+
+    print_colors_by_code( 0 .. 255 );
+
+    print_rgb();
+    print_gbr();
+    print_brg();
+
+    if (@colors) {
+        print_colors_by_code( @colors );
+    }
+}
+
+sub print_rgb {
+    print_pallette('red', 'green', 'blue');
+}
+
+sub print_gbr {
+    print_pallette('green', 'blue', 'red');
+}
+
+sub print_brg {
+    print_pallette('blue', 'red', 'green');
+}
+
+sub print_pallette {
+    my (@color_order) = @_;
+
+    print "\n";
+    my $n = 1;
+    my ($color_map) = { map { $_ => $n++ } @color_order };
+    my @cube = ( 0 .. 5 );
+
+    for my $c1 ( @cube ) {
+        for my $c2 ( @cube ) {
+            for my $c3 ( @cube ) {
+                my $red   = eval( '$c' . $color_map->{red}   );
+                my $green = eval( '$c' . $color_map->{green} );
+                my $blue  = eval( '$c' . $color_map->{blue}  );
+                my $color = 16 + ($red * 36) + ($green * 6) + $blue;
+                my $txt = sprintf("% 4d ",$color);
+                print_colored( $color, $txt );
+                print ' ';
+            }
+            print ' ';
+            for my $c3 ( @cube ) {
+                my $red   = eval( '$c' . $color_map->{red}   );
+                my $green = eval( '$c' . $color_map->{green} );
+                my $blue  = eval( '$c' . $color_map->{blue}  );
+                my $color = 16 + ($red * 36) + ($green * 6) + $blue;
+                my $txt = sprintf("% 4d ",$color);
+                print_colored_text( $color, $txt );
+                print ' ';
+            }
+            print "\n";
+        }
+    }
+}
+
+sub print_colors_by_code {
+    my (@colors) = @_;
+
     my $n = int( $screen_cols / 6 );
+
+    print "\n";;
     for my $method ( \&print_colored, \&print_colored_text ) {
-        for my $color ( 0 .. 255 ) {
+        for my $color ( @colors ) {
             my $txt = sprintf("% 4d ",$color);
             $method->( $color, $txt );
             print ' ';
@@ -27,24 +91,6 @@ sub main {
         }
         print "\n";
     }
-
-    if (@colors) {
-        for my $method ( \&print_colored, \&print_colored_text ) {
-            my $count = 0;
-            for my $color ( @colors ) {
-                my $txt = sprintf("% 4d ",$color);
-                $method->( $color, $txt );
-                print ' ';
-                if ($count++ % $n == $n-1) {
-                    print "\n";
-                }
-            }
-            print "\n";
-        }
-
-
-    }
-
 }
 
 sub usage {
