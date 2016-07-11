@@ -341,6 +341,13 @@ Provide colormaps and functions to simplify rendering colored text using ANSI 25
 
     gray    - 24 colors : Black -> Gray -> White
 
+
+    blue-cyan-green        - 19 colors : Blue -> Cyan -> Green
+
+    red-pink-yellow        - 16 colors : Red -> Pink -> Yellow
+
+    green-orange-pink-blue - 16 colors : Green -> Orange -> Pink -> Blue
+
 =head1 AUTHOR
 
 Felix Tubiana, C<< <felixtubiana at gmail.com> >>

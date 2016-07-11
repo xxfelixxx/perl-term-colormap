@@ -19,7 +19,17 @@ BEGIN {
     ) || print "Bail out on imports!\n";
 }
 
-my @valid_colormaps = qw( rainbow primary bright ash snow gray );
+my @valid_colormaps = qw(
+    ash
+    bright
+    gray
+    primary
+    rainbow
+    snow
+    blue-cyan-green
+    red-pink-yellow
+    green-orange-pink-blue
+);
 
 for my $name ( @valid_colormaps ) {
     my $mapping = colormap($name);
