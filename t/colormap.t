@@ -155,6 +155,58 @@ my $expected_color_table = '-|-|-|-|-|-|-| |r|a|i|n|b|o|w| |-|-|-|-|-|-|-|
 ok($color_table_normalized eq $expected_color_table, "Rainbow table is \n$color_table_output")
     or diag( "Got \n$output_normalized\n, but expected \n$expected_color_table\n");
 
+my $color_table_output2 = capture_merged {
+    color_table('green-orange-pink-blue');
+};
+
+my $color_table_normalized2 = normalize_colored_text( $color_table_output2 );
+my $expected_color_table2 = ' |g|r|e|e|n|-|o|r|a|n|g|e|-|p|i|n|k|-|b|l|u|e| |
+|c|o|l|o|r| | | | | |n|u|m|b|e|r| | | |r|g|b|
+||[|4|8|;|5|;|2|8|m| | | | | | | | ||[|0|m| | | | |2|8| | | |0|0|8|7|0|0|
+||[|4|8|;|5|;|6|4|m| | | | | | | | ||[|0|m| | | | |6|4| | | |5|f|8|7|0|0|
+||[|4|8|;|5|;|1|0|0|m| | | | | | | | ||[|0|m| | | |1|0|0| | | |8|7|8|7|0|0|
+||[|4|8|;|5|;|1|3|6|m| | | | | | | | ||[|0|m| | | |1|3|6| | | |a|f|8|7|0|0|
+||[|4|8|;|5|;|1|7|2|m| | | | | | | | ||[|0|m| | | |1|7|2| | | |d|7|8|7|0|0|
+||[|4|8|;|5|;|2|0|8|m| | | | | | | | ||[|0|m| | | |2|0|8| | | |f|f|8|7|0|0|
+||[|4|8|;|5|;|2|0|9|m| | | | | | | | ||[|0|m| | | |2|0|9| | | |f|f|8|7|5|f|
+||[|4|8|;|5|;|2|1|0|m| | | | | | | | ||[|0|m| | | |2|1|0| | | |f|f|8|7|8|7|
+||[|4|8|;|5|;|2|1|1|m| | | | | | | | ||[|0|m| | | |2|1|1| | | |f|f|8|7|a|f|
+||[|4|8|;|5|;|2|1|2|m| | | | | | | | ||[|0|m| | | |2|1|2| | | |f|f|8|7|d|7|
+||[|4|8|;|5|;|2|1|3|m| | | | | | | | ||[|0|m| | | |2|1|3| | | |f|f|8|7|f|f|
+||[|4|8|;|5|;|1|7|7|m| | | | | | | | ||[|0|m| | | |1|7|7| | | |d|7|8|7|f|f|
+||[|4|8|;|5|;|1|4|1|m| | | | | | | | ||[|0|m| | | |1|4|1| | | |a|f|8|7|f|f|
+||[|4|8|;|5|;|1|0|5|m| | | | | | | | ||[|0|m| | | |1|0|5| | | |8|7|8|7|f|f|
+||[|4|8|;|5|;|6|9|m| | | | | | | | ||[|0|m| | | | |6|9| | | |5|f|8|7|f|f|
+||[|4|8|;|5|;|3|3|m| | | | | | | | ||[|0|m| | | | |3|3| | | |0|0|8|7|f|f|
+';
+ok($color_table_normalized2 eq $expected_color_table2,
+   "Green-Orange-Pink-Blue table is \n$color_table_output2")
+    or diag( "Got \n$color_table_normalized2\n, but expected \n$expected_color_table2\n");
+
+my $color_table_output3 = capture_merged {
+    color_table('snow');
+};
+
+my $color_table_normalized3 = normalize_colored_text( $color_table_output3 );
+my $expected_color_table3 = '-|-|-|-|-|-|-|-| |s|n|o|w| |-|-|-|-|-|-|-|-|-|
+|c|o|l|o|r| | | | | |n|u|m|b|e|r| | | |r|g|b|
+||[|4|8|;|5|;|2|4|4|m| | | | | | | | ||[|0|m| | | |2|4|4| | | |8|0|8|0|8|0|
+||[|4|8|;|5|;|2|4|5|m| | | | | | | | ||[|0|m| | | |2|4|5| | | |8|a|8|a|8|a|
+||[|4|8|;|5|;|2|4|6|m| | | | | | | | ||[|0|m| | | |2|4|6| | | |9|4|9|4|9|4|
+||[|4|8|;|5|;|2|4|7|m| | | | | | | | ||[|0|m| | | |2|4|7| | | |9|e|9|e|9|e|
+||[|4|8|;|5|;|2|4|8|m| | | | | | | | ||[|0|m| | | |2|4|8| | | |a|8|a|8|a|8|
+||[|4|8|;|5|;|2|4|9|m| | | | | | | | ||[|0|m| | | |2|4|9| | | |b|2|b|2|b|2|
+||[|4|8|;|5|;|2|5|0|m| | | | | | | | ||[|0|m| | | |2|5|0| | | |b|c|b|c|b|c|
+||[|4|8|;|5|;|2|5|1|m| | | | | | | | ||[|0|m| | | |2|5|1| | | |c|6|c|6|c|6|
+||[|4|8|;|5|;|2|5|2|m| | | | | | | | ||[|0|m| | | |2|5|2| | | |d|0|d|0|d|0|
+||[|4|8|;|5|;|2|5|3|m| | | | | | | | ||[|0|m| | | |2|5|3| | | |d|a|d|a|d|a|
+||[|4|8|;|5|;|2|5|4|m| | | | | | | | ||[|0|m| | | |2|5|4| | | |e|4|e|4|e|4|
+||[|4|8|;|5|;|2|5|5|m| | | | | | | | ||[|0|m| | | |2|5|5| | | |e|e|e|e|e|e|
+';
+ok($color_table_normalized3 eq $expected_color_table3,
+   "Snow table is \n$color_table_output3")
+    or diag( "Got \n$color_table_normalized3\n, but expected \n$expected_color_table3\n");
+
 # rgb2color tests
 dies_ok { rgb2color( 'garbage' ) } 'rgb2color dies when fed garbage';
 
