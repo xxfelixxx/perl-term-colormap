@@ -11,7 +11,7 @@ Term::Colormap - Colormaps for ANSI 256 Color Terminals!
 
 Version
 ---------
-Version 0.08
+Version 0.09
 
 Synopsis
 -----------
