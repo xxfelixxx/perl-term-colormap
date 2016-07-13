@@ -82,4 +82,16 @@ my $expected_color_table = '|[|4|8|;|5|;|1|m| | ||[|0|m||[|4|8|;|5|;|1|9|6|m|
 ok($color_table_normalized eq $expected_color_table, "Rainbow table is \n$colortable_output")
     or diag( "Got \n$output_normalized\n, but expected \n$expected_color_table\n");
 
+# rgb2color tests
+dies_ok { rgb2color( 'garbage' ) } 'rgb2color dies when fed garbage';
+
+my @bad;
+for my $n (1 .. 1000) {
+    my $hex = sprintf("%06x", int rand 256*256*25);
+    my $color = rgb2color($hex);
+    push @bad, $n
+        unless ( 0 <= $color && $color <= 255 );
+};
+ok(scalar @bad == 0, 'rgb2color handles 1000 random color combinations');
+
 done_testing();

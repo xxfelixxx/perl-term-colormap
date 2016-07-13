@@ -127,6 +127,13 @@ my $rgb2color = { map { $_ => $color++ } @$color2rgb };
 sub rgb2color {
     my ($rgb) = @_;
 
+    my $original_rgb = $rgb;
+    $rgb =~ s|^#||;
+    $rgb = lc($rgb);
+    if ( $rgb =~ m|[^a-f0-9]| ) {
+        die "Invalid RGB color '$original_rgb'"
+    }
+
     unless (defined $rgb2color->{$rgb}) {
         $rgb2color->{ $rgb } = $rgb2color->{ _get_nearest_color($rgb) };
     }
