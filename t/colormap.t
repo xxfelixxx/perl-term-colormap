@@ -111,14 +111,12 @@ ok($output_normalized2 eq $expected2, "Rainbow (vertical) is \n$colorbar_output2
     or diag( "Got \n$output_normalized2\n, but expected \n$expected2\n");
 
 # Color Table Tests
-
 my $color_table_output = capture_merged {
     color_table('rainbow');
 };
 
 my $color_table_normalized = normalize_colored_text( $color_table_output );
 
-# TODO: Change output, should have words rainbow in it.
 my $expected_color_table = '-|-|-|-|-|-|-| |r|a|i|n|b|o|w| |-|-|-|-|-|-|-|
 |c|o|l|o|r| | | | | |n|u|m|b|e|r| | | |r|g|b|
 ||[|4|8|;|5|;|1|m| | | | | | | | ||[|0|m| | | | | |1| | | |8|0|0|0|0|0|
