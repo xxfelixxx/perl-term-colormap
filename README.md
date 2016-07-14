@@ -8,6 +8,7 @@ Name
 Term::Colormap - Colormaps for ANSI 256 Color Terminals!
 
 [![Build Status](https://secure.travis-ci.org/xxfelixxx/perl-term-colormap.svg)](http://travis-ci.org/xxfelixxx/perl-term-colormap)
+[![Coverage Status](https://coveralls.io/repos/github/xxfelixxx/perl-term-colormap/badge.svg?branch=master)](https://coveralls.io/github/xxfelixxx/perl-term-colormap?branch=master)
 
 Version
 ---------
