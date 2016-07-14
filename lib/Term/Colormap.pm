@@ -248,6 +248,11 @@ __END__
 
 Term::Colormap - Colormaps for ANSI 256 Color Terminals!
 
+=for html
+<a href="http://travis-ci.org/xxfelixxx/perl-term-colormap"><img alt="Build Status" src="https://secure.travis-ci.org/xxfelixxx/perl-term-colormap.svg" /></a>
+<a href="https://coveralls.io/github/xxfelixxx/perl-term-colormap?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/github/xxfelixxx/perl-term-colormap/badge.svg?branch=master" /></a>
+<a href="https://metacpan.org/pod/Term::Colormap"><img alt="CPAN Version" src="https://badge.fury.io/pl/Term-Colormap.svg" /></a>
+
 =head1 VERSION
 
 Version 0.09
