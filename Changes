@@ -3,7 +3,6 @@ Revision history for Term-Colormap
 0.12   Tue Oct 24 12:37:49 UTC 2017
     * Added test dependency for Test::Exception in Build.PL
     * Fixed the MANIFEST
-    * Added META.json and META.yml
 
 0.11   Tue Oct 24 06:56:12 UTC 2017
     * Added create_brewer_mapping script
