@@ -1,5 +1,12 @@
 Revision history for Term-Colormap
 
+0.11   Tue Oct 24 06:56:12 UTC 2017
+    * Added create_brewer_mapping script
+    * Added show_brewer_colormap
+    * Added Term::Colormap::Brewer
+    * Brewer colormaps (GPL'd) taken from
+      - www.ColorBrewer.org by Cynthia A. Brewer, Geography, Pennsylvania State University
+
 0.10   Wed Jul 13 23:34:54 UTC 2016
     * Added coveralls to .travis.yml
     * Updated README.md with coverage badge.
