@@ -815,7 +815,8 @@ Version 0.14
 
 Provide the Brewer colormaps.
 
-    use Term::Colormap::Brewer qw( colormap colorbar print_colored );
+    use Term::Colormap qw( colormap colorbar print_colored );
+    use Term::Colormap::Brewer;
 
     my $accent = colormap('accent-3');
 
