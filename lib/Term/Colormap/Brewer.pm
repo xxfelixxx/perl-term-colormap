@@ -1,5 +1,8 @@
 package Term::Colormap::Brewer;
 
+use strict;
+use warnings FATAL => 'all';
+
 use Term::Colormap qw( add_mapping );
 
 our $VERSION = '0.12';

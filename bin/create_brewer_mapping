@@ -59,6 +59,9 @@ package Term::Colormap::Brewer;
 
 use Term::Colormap qw( add_mapping );
 
+use strict;
+use warnings;
+
 EOHEAD
 print 'our $VERSION' . " = '" . $VERSION .  "';\n\n";
 
