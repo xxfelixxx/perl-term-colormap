@@ -6,7 +6,7 @@ use warnings FATAL => 'all';
 use Exporter 'import';
 use Scalar::Util qw( looks_like_number );
 
-our $VERSION = '0.15';
+our $VERSION = '0.16';
 
 our @EXPORT_OK = qw(
     colorbar
@@ -268,7 +268,7 @@ Term::Colormap - Colormaps for ANSI 256 Color Terminals!
 
 =head1 VERSION
 
-Version 0.15
+Version 0.16
 
 =head1 SYNOPSIS
 
