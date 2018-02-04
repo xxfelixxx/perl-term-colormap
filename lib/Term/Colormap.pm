@@ -389,6 +389,10 @@ Provide colormaps and functions to simplify rendering colored text using ANSI 25
 
     green-orange-pink-blue - 16 colors : Green -> Orange -> Pink -> Blue
 
+=head1 What do they look like?
+
+    Run the show_colormap script to display them in your terminal.
+
 =head1 AUTHOR
 
 Felix Tubiana, C<< <felixtubiana at gmail.com> >>

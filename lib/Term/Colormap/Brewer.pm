@@ -1098,6 +1098,10 @@ Colors from www.ColorBrewer.org by Cynthia A. Brewer, Geography, Pennsylvania St
 
 =head1 AUTHOR
 
+=head1 What do they look like?
+
+    Run the show_brewer_colormap script to display them in your terminal.
+
 Felix Tubiana, C<< <felixtubiana at gmail.com> >>
 
 =head1 BUGS
