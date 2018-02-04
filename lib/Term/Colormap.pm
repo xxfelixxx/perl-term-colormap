@@ -17,6 +17,7 @@ our @EXPORT_OK = qw(
     print_colored_text
     color_table
     add_mapping
+    colormap_names
 );
 
 my $color_mapping = {};
@@ -183,6 +184,12 @@ sub colormap {
 
 }
 
+sub colormap_names {
+
+    return sort keys %$color_mapping;
+
+}
+
 sub color2rgb {
     my ($color) = @_;
 
@@ -284,6 +291,7 @@ Provide colormaps and functions to simplify rendering colored text using ANSI 25
     print_colored_text
     color_table
     add_mapping
+    colormap_names
 
 =head1 SUBROUTINES/METHODS
 
@@ -352,6 +360,12 @@ Provide colormaps and functions to simplify rendering colored text using ANSI 25
     add_mapping('my_colors', [ 1, 3, 5, 7, 9 ])
 
     color_table('my_colors');
+
+=head2 colormap_names
+
+    Returns the list of available colormaps.
+
+    my @available_colormaps = colormap_names();
 
 =head1 AVAILABLE COLORMAPS
 
