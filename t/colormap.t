@@ -39,6 +39,11 @@ for my $name ( @valid_colormaps ) {
     ok ( scalar @$mapping, "Colormap $name" );
 }
 
+my $colormap_names = join('|', sort ( colormap_names() ) );
+my $expected_names = join('|', sort @valid_colormaps );
+ok( $colormap_names eq $expected_names, 'Colormap_names returns valid names' )
+    or diag( "Got '$colormap_names'\nExpected '$expected_names'" );
+
 dies_ok { colormap('foo') } 'Colormap catches invalid names';
 
 my $colors_seen = {};
