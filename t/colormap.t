@@ -9,13 +9,15 @@ use Capture::Tiny ':all';
 BEGIN {
     use_ok(
         'Term::Colormap', qw(
+          add_mapping
+          color2rgb
+          color_table
           colorbar
           colormap
-          color2rgb
-          rgb2color
+          colormap_names
           print_colored
           print_colored_text
-          color_table
+          rgb2color
           )
     ) || print "Bail out on imports!\n";
 }
